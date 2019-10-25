@@ -1,3 +1,4 @@
+  
 -----------------------------------------------------------------------------------------
 --
 -- instructions
@@ -26,7 +27,7 @@ scene = composer.newScene( sceneName ) -- This function doesn't accept a string,
 -----------------------------------------------------------------------------------------
 -- LOCAL VARIABLES
 -----------------------------------------------------------------------------------------
-local bkg_image=Instructions Screen.png
+local bkg_image
 local backButton
 
 -----------------------------------------------------------------------------------------
@@ -35,7 +36,7 @@ local backButton
 
 -- Creating Transitioning Function back to main menu
 local function BackTransition( )
-    composer.gotoScene( "main_menu", {effect = "zoomOutInFadeRotate", time = 500})
+    composer.gotoScene( "main_menu", {effect = "fromRight", time = 500})
 end
 
 
@@ -54,7 +55,7 @@ function scene:create( event )
     -----------------------------------------------------------------------------------------
 
     -- Insert the background image and set it to the center of the screen
-    bkg_image = display.newImageRect("Images/Credits Screen.png", display.contentWidth, display.contentHeight)
+    bkg_image = display.newImageRect("Images/Instructions Screen.png", display.contentWidth, display.contentHeight)
     bkg_image.x = display.contentCenterX
     bkg_image.y = display.contentCenterY
     bkg_image.width = display.contentWidth
