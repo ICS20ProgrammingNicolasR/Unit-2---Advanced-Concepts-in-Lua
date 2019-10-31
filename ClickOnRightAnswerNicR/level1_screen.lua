@@ -126,7 +126,9 @@ end
 local function LoseScreenTransition( )        
     composer.gotoScene( "you_lose", {effect = "zoomInOutFade", time = 1000})
 end 
-
+local function WinScreenTransition()
+    composer.gotoScene( "you_win", {effect = "zoomInOutFade", time = 1000})
+end
 -- The function that displays the equation and determines the answer and the wrong answers
 local function DisplayAddEquation()
     -- local variables to this function
@@ -163,7 +165,16 @@ local function RestartScene()
         DetermineAnswers()
         DisplayAnswers()
     end
+        if (points == 5) then
+        composer.gotoScene("you_win")
+    else 
+
+        DisplayAddEquation()
+        DetermineAnswers()
+        DisplayAnswers()
+    end
 end
+
 
 -- Functions that checks if the buttons have been clicked.
 local function TouchListenerAnswer(touch)
