@@ -165,14 +165,13 @@ local function RestartScene()
         DetermineAnswers()
         DisplayAnswers()
     end
-        if (points == 5) then
-        composer.gotoScene("you_win")
-    else 
-
-        DisplayAddEquation()
-        DetermineAnswers()
-        DisplayAnswers()
-    end
+        if (numberCorrect == 3) then
+            composer.gotoScene("you_win")
+        else
+            DisplayAddEquation()
+            DetermineAnswers()
+            DisplayAnswers()
+        end
 end
 
 
