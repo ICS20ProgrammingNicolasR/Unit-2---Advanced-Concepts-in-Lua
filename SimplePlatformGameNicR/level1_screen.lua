@@ -49,7 +49,6 @@ local spikes3platform
 
 local torchesAndSign
 local door
-local door
 local character
 
 local heart1
@@ -58,11 +57,13 @@ local numLives = 2
 
 local rArrow 
 local uArrow
+local larrow
 
 local motionx = 0
-local SPEED = 5
+local RSPEED = 7
+local LSPEED = -7
 local LINEAR_VELOCITY = -100
-local GRAVITY = 7
+local GRAVITY = 1
 
 local leftW 
 local topW
@@ -80,8 +81,14 @@ local questionsAnswered = 0
  
 -- When right arrow is touched, move character right
 local function right (touch)
-    motionx = SPEED
+    motionx = RSPEED
     character.xScale = 1
+end
+
+-- When left arrow is touched, move character left
+local function left (touch)
+    motionx = LSPEED
+    character.xScale = -1
 end
 
 -- When up arrow is touched, add vertical so it can jump
@@ -107,11 +114,13 @@ end
 local function AddArrowEventListeners()
     rArrow:addEventListener("touch", right)
     uArrow:addEventListener("touch", up)
+    lArrow:addEventListener("touch", left)
 end
 
 local function RemoveArrowEventListeners()
     rArrow:removeEventListener("touch", right)
     uArrow:removeEventListener("touch", up)
+    lArrow:addEventListener("touch", left)
 end
 
 local function AddRuntimeListeners()
@@ -462,7 +471,14 @@ function scene:create( event )
 
     -- Insert objects into the scene group in order to ONLY be associated with this scene
     sceneGroup:insert( uArrow)
+    --Insert the left arrow
+    lArrow = display.newImageRect("Images/LeftArrowUnpressed.png", 50, 100)
+    lArrow.x = display.contentWidth * 7.2 / 10
+    lArrow.y = display.contentHeight * 9.5 / 10
 
+    -- Insert objects into the scene group in order to ONLY be associated with this scene
+    sceneGroup:insert( lArrow)
+   
     --WALLS--
     leftW = display.newLine( 0, 0, 0, display.contentHeight)
     leftW.isVisible = true
