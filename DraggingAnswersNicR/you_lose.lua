@@ -21,7 +21,7 @@ local widget = require( "widget" )
 -----------------------------------------------------------------------------------------
 
 -- Naming Scene
-sceneName = "you_win"
+sceneName = "you_lose"
 
 -- Creating Scene Object
 local scene = composer.newScene( sceneName ) -- This function doesn't accept a string, only a variable containing a string
@@ -42,7 +42,7 @@ function scene:create( event )
     -----------------------------------------------------------------------------------------
 
     -- Insert the background image and set it to the center of the screen
-    bkg_image = display.newImage("Images/Winscreen.png")
+    bkg_image = display.newImage("Images/losescreen.png")
     bkg_image.x = display.contentCenterX
     bkg_image.y = display.contentCenterY
     bkg_image.width = display.contentWidth
@@ -62,13 +62,10 @@ function scene:show( event )
     -----------------------------------------------------------------------------------------
 
     local phase = event.phase
-    -----------------------------------------------------------------------------------------
-
-    local winsound=audio.loadSound("Sounds/yabbadabbalaugh.wav")
-    local winsoundchannel=audio.play(winsound)
 
     -----------------------------------------------------------------------------------------
-
+    local losesound=audio.loadSound("Sounds/youLoseSound.mp3")
+    local losesoundchannel=audio.play(losesound)
     if ( phase == "will" ) then
         -- Called when the scene is still off screen (but is about to come on screen).
 
