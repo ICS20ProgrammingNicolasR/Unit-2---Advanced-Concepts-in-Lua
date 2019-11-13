@@ -76,6 +76,11 @@ local theBall
 local questionsAnswered = 0
 
 -----------------------------------------------------------------------------------------
+-- SOUNDS 
+----------------------------------------------------------------------------------------- 
+local popSound=audio.loadSound("Sounds/Pop.mp3")
+local popSoundChannel
+-----------------------------------------------------------------------------------------
 -- LOCAL SCENE FUNCTIONS
 ----------------------------------------------------------------------------------------- 
  
@@ -190,6 +195,8 @@ local function onCollision( self, event )
             (event.target.myName == "spikes3") then
 
             -- add sound effect here
+            --Pop sound
+            popSoundChannel = audio.play(popSound)
 
             -- remove runtime listeners that move the character
             RemoveArrowEventListeners()
@@ -235,9 +242,9 @@ local function onCollision( self, event )
         end
 
         if (event.target.myName == "door") then
-            --check to see if the user has answered 5 questions
+            --check to see if the user has answered 3 questions
             if (questionsAnswered == 3) then
-                -- after getting 3 questions right, go to the you win screen
+                composer.gotoScene(youWin)
             end
         end        
 
