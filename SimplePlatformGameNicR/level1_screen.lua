@@ -53,6 +53,7 @@ local character
 
 local heart1
 local heart2
+local heart3
 local numLives = 2
 
 local rArrow 
@@ -71,6 +72,7 @@ local floor
 
 local ball1
 local ball2
+local ball3
 local theBall
 
 local questionsAnswered = 0
@@ -166,11 +168,13 @@ end
 local function MakeSoccerBallsVisible()
     ball1.isVisible = true
     ball2.isVisible = true
+    ball3.isVisible = true
 end
 
 local function MakeHeartsVisible()
     heart1.isVisible = true
     heart2.isVisible = true
+    heart3.isVisible = true
 end
 
 local function YouLoseTransition()
@@ -208,22 +212,31 @@ local function onCollision( self, event )
             -- decrease number of lives
             numLives = numLives - 1
 
-            if (numLives == 1) then
+            if (numLives == 2) then
                 -- update hearts
                 heart1.isVisible = true
                 heart2.isVisible = false
+                heart3.isVisible = false
                 timer.performWithDelay(200, ReplaceCharacter) 
 
+            elseif (numLives == 1) then
+                -- update hearts
+                heart1.isVisible = true
+                heart2.isVisible = false
+                heart3.isVisible = false
+ 
             elseif (numLives == 0) then
                 -- update hearts
                 heart1.isVisible = false
                 heart2.isVisible = false
-                timer.performWithDelay(200, YouLoseTransition)
+                heart3.isVisible = false
+               timer.performWithDelay(200, YouLoseTransition)
             end
         end
 
         if  (event.target.myName == "ball1") or
-            (event.target.myName == "ball2") then
+            (event.target.myName == "ball2") or
+            (event.target.myName == "ball3")then
 
             -- get the ball that the user hit
             theBall = event.target
@@ -266,7 +279,8 @@ local function AddCollisionListeners()
     ball1:addEventListener( "collision" )
     ball2.collision = onCollision
     ball2:addEventListener( "collision" )
-
+    ball3.collision = onCollision
+    ball3:addEventListener( "collision" )
     door.collision = onCollision
     door:addEventListener( "collision" )
 end
@@ -278,7 +292,7 @@ local function RemoveCollisionListeners()
 
     ball1:removeEventListener( "collision" )
     ball2:removeEventListener( "collision" )
-
+    ball3:removeEventListener( "collision" )
     door:removeEventListener( "collision")
 
 end
@@ -304,7 +318,7 @@ local function AddPhysicsBodies()
 
     physics.addBody(ball1, "static",  {density=0, friction=0, bounce=0} )
     physics.addBody(ball2, "static",  {density=0, friction=0, bounce=0} )
-
+    physics.addBody(ball3, "static",  {density=0, friction=0, bounce=0} )
     physics.addBody(door, "static", {density=1, friction=0.3, bounce=0.2})
 
 end
@@ -459,9 +473,13 @@ function scene:create( event )
     heart2.x = 130
     heart2.y = 50
     heart2.isVisible = true
-
+   sceneGroup:insert( heart2 )
+    heart3 = display.newImageRect("Images/heart.png", 80, 80)
+    heart3.x = 170
+    heart3.y = 50
+    heart3.isVisible = true
     -- Insert objects into the scene group in order to ONLY be associated with this scene
-    sceneGroup:insert( heart2 )
+    sceneGroup:insert( heart3 )
 
     --Insert the right arrow
     rArrow = display.newImageRect("Images/RightArrowUnpressed.png", 100, 50)
@@ -530,7 +548,13 @@ function scene:create( event )
 
     -- Insert objects into the scene group in order to ONLY be associated with this scene
     sceneGroup:insert( ball2 )
+    ball3 = display.newImageRect ("Images/SoccerBall.png", 70, 70)
+    ball3.x = 590
+    ball3.y = 170
+    ball3.myName = "ball3"
 
+    -- Insert objects into the scene group in order to ONLY be associated with this scene
+    sceneGroup:insert( ball3 )
 end --function scene:create( event )
 
 -----------------------------------------------------------------------------------------

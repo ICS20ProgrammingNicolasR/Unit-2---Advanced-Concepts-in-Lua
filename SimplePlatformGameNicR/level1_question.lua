@@ -250,6 +250,7 @@ function scene:create( event )
     sceneGroup:insert(answerText)
     sceneGroup:insert(wrongText1)
     sceneGroup:insert(wrongText2)
+    sceneGroup:insert(wrongText3)
 
 
 end --function scene:create( event )
