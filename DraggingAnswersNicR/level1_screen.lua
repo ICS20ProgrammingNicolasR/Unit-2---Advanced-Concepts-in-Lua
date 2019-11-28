@@ -70,9 +70,14 @@ local alternateAnswerBox3PreviousX
 local userAnswerBoxPlaceholder
 
 -- sound effects
-local correctSound
-local booSound
-
+local correctSound = audio.loadSound("Sounds/Correct.wav")
+local booSound = audio.loadSound("Sounds/boo.mp3")
+local bkgMusic = audio.loadSound("Sounds/Money.mp3")
+local correctSoundchannel
+local booSoundChannel
+local bkgMusicChannel = audio.play(bkgMusic,{loop = -1})
+local score = 0
+local lives = 2
 -----------------------------------------------------------------------------------------
 -- LOCAL FUNCTIONS
 -----------------------------------------------------------------------------------------
@@ -192,6 +197,9 @@ end
 local function YouWinTransitionLevel1( )
     composer.gotoScene("you_win", {effect = "fade", time = 500})
 end
+local function YouLoseTransitionLevel1( )
+    composer.gotoScene("you_lose", {effect = "fade", time = 500})
+end
 
 -- Function to Restart Level 1
 local function RestartLevel1()
@@ -242,7 +250,12 @@ local function TouchListenerAnswerbox(touch)
 
                 -- call the function to check if the user's input is correct or not
                 CheckUserAnswerInput()
-
+                correctSoundchannel = audio.play(correctSound)
+                --add a score 
+                score = score + 1
+                if(score==5)then
+                    YouWinTransitionLevel1()
+                end
             --else make box go back to where it was
             else
                 answerbox.x = answerboxPreviousX
@@ -284,6 +297,11 @@ local function TouchListenerAnswerBox1(touch)
                 -- call the function to check if the user's input is correct or not
                 CheckUserAnswerInput()
 
+                booSoundChannel = audio.play(booSound)
+                lives = lives - 1
+                if (lives == 0)then
+                    YouLoseTransitionLevel1()
+                end
             --else make box go back to where it was
             else
                 alternateAnswerBox1.x = alternateAnswerBox1PreviousX
@@ -324,6 +342,11 @@ local function TouchListenerAnswerBox2(touch)
                 -- call the function to check if the user's input is correct or not
                 CheckUserAnswerInput()
 
+                booSoundChannel = audio.play(booSound)
+                lives = lives - 1
+                if (lives == 0)then
+                    YouLoseTransitionLevel1()
+                end
             --else make box go back to where it was
             else
                 alternateAnswerBox2.x = alternateAnswerBox2PreviousX
@@ -365,7 +388,11 @@ local function TouchListenerAnswerBox3(touch)
 
                 -- call the function to check if the user's input is correct or not
                 CheckUserAnswerInput()
-
+                booSoundChannel = audio.play(booSound)
+                lives = lives - 1
+                if (lives == 0)then
+                    YouLoseTransitionLevel1()
+                end
             --else make box go back to where it was
             else
                 alternateAnswerBox3.x = alternateAnswerBox1PreviousX
